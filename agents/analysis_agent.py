@@ -1,10 +1,7 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+from models.llm import get_llm
+llm = get_llm(temperature=0.2)
 
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
 
 from langchain_core.output_parsers import JsonOutputParser
 parser = JsonOutputParser()
@@ -41,7 +38,6 @@ Texto para analisar: {texto_padronizado}
 
 prompt = PromptTemplate(input_variables=["texto_padronizado"], template=template_analysis)
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.4) #verbose=True para ver o que está acontecendo
 
 chain = prompt | llm | parser
 

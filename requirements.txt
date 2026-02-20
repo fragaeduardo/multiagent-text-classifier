@@ -4,3 +4,5 @@ langgraph
 redis
 qdrant-client
 python-dotenv
+
+#OBS: BAIXAR REDIS-SERVER -Y NA MÁQUINA COM DOCKER

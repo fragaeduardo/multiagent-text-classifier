@@ -1,0 +1,6 @@
+langchain
+langchain-openai
+langgraph
+redis
+qdrant-client
+python-dotenv

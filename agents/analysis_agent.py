@@ -12,23 +12,28 @@ parser = JsonOutputParser()
 
 
 template_analysis = ("""
-Você é o Agente Analisador de um sistema de classificação de texto.
-Sua tarefa é realizar uma decomposição lógica e semântica do texto fornecido.
+Você é o Agente Analisador. Sua tarefa é decompor o texto em diferentes ASSUNTOS (aspectos) e analisar cada um individualmente.
 
-Responsabilidades:
-1. Tom de Voz: Identifique o tom (ex: formal, agressivo, confuso, urgente, amigável).
-2. Intenção: Identifique qual é o objetivo principal do usuário (ex: pedido de ajuda, reclamação, dúvida técnica, elogio).
-3. Tópicos: Liste os 3 principais assuntos/palavras-chave citados no texto.
-4. Urgência: Avalie se o texto demonstra uma necessidade imediata (baixa, média ou alta).
+Para cada assunto identificado, você deve extrair:
+1. Assunto: O tema específico (ex: Login, Preço, Interface).
+2. Tom de Voz: O tom do usuário sobre esse tema (ex: irritado, satisfeito, neutro).
+3. Intenção: O que o usuário pretende (ex: reclamar, elogiar, tirar dúvida).
+4. Urgência: O nível de necessidade para esse ponto específico (baixa, média, alta).
 
+
+Regra de Intenção: Diferencie entre ações concluídas e ações pendentes. (ex: se o usuário cita um bug para reclamar do tempo de resposta, a intenção é 'reclamar', porém se o usuário cita um bug porque precisa de ajuda para resolvê-lo agora, a intenção é 'resolver_problema'
+Regra de Sarcasmo: Analise o texto como um todo antes de segmentar. Se houver elogios contradizendo falhas graves (ex: 'parabéns' por um site caído), identifique como Sarcasmo. Nesses casos, o Tom de Voz deve ser 'irônico' e a Intenção deve ser 'reclamar' para todos relacionados a falha.
 Formato de Saída (JSON):
 {{
-  "analise_semantica": {{
-    "tom_de_voz": "...",
-    "intencao_principal": "...",
-    "topicos": ["...", "...", "..."],
-    "nivel_urgencia": "..."
-  }}
+  "analise_semantica": [
+    {{
+      "assunto": "...",
+      "tom_de_voz": "...",
+      "intencao": "...",
+      "nivel_urgencia": "...",
+      "trecho_referencia": "..." 
+    }}
+  ]
 }}
 
 Texto para analisar: {texto_padronizado}

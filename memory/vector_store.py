@@ -5,28 +5,35 @@ import atexit
 from datetime import datetime
 from models.llm import MODEL_LLM
 from models.embeddings import MODEL_EMBEDDINGS
-client = QdrantClient(path="./storage/qdrant")
+
+_client = None
+#client = QdrantClient(path="./storage/qdrant")
 
 COLLECTION_NAME = "mensagens_processadas"
-def inicializar_banco():
-    if not client.collection_exists(collection_name=COLLECTION_NAME):
-        print(f"[Qdrant] Criando nova coleção: {COLLECTION_NAME}")
-        client.create_collection(collection_name=COLLECTION_NAME, 
+def get_client():
+    global _client
+    if _client is None:
+        print("[Qdrant] Inicializando cliente pela 1° vez")
+        _client = QdrantClient(path="./storage/qdrant")
+        if not _client.collection_exists(collection_name=COLLECTION_NAME):
+            print(f"[Qdrant] Criando nova coleção: {COLLECTION_NAME}")
+            _client.create_collection(collection_name=COLLECTION_NAME, 
                                 vectors_config = VectorParams(size=1536, distance=Distance.COSINE))
-    else:
-        print(f"[Qdrant] Coleção {COLLECTION_NAME} encontrada")
+        
+    return _client
     
 
-inicializar_banco()
-
 def fechar_banco(): #evita mensagens de limpeza no final da execução
-    print("[Qdrant] Encerrando conexão com o banco de vetores")
-    client.close()
+    global _client
+    if _client is not None:
+        print("[Qdrant] Encerrando conexão com o banco de vetores")
+        _client.close()
 atexit.register(fechar_banco)
 
 
 import uuid
 def salvar_respostas_vdb(state: dict):
+    client = get_client()
     id_atual = str(uuid.uuid4())
     data = datetime.now().isoformat()
     payload = {
@@ -56,6 +63,7 @@ def salvar_respostas_vdb(state: dict):
     print(f"[Qdrant] Embeddings salvo com sucesso. ID: {id_atual}")
 
 def buscar_parecidos(vetor_busca, limite):
+    client = get_client()
     print(f"[Qdrant] Buscando textos parecidos")
     resultados = client.query_points( #usando query_points pq o search tava bugado
         collection_name = COLLECTION_NAME,

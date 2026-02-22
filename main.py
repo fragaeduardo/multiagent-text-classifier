@@ -5,6 +5,7 @@ from agents.analysis_agent import analysis
 from agents.classification_agent import classification
 from agents.explanation_agent import explanation
 from memory.vector_store import salvar_respostas_vdb, buscar_parecidos
+from memory.queue_manager import enviar_para_fila
 
 from memory.cache import get_cache_text, salvar_resultado
 
@@ -95,20 +96,12 @@ graph.add_edge("agent_explanation", END)
 
 app = graph.compile()
 
-input_text = input("Digite o texto a ser analisado: ")
-state["texto_original"] = input_text
-resultado = app.invoke(state)
-if not resultado.get("cache_found"):
-    salvar_resultado(resultado["texto_padronizado"], resultado) #cache
-    salvar_respostas_vdb(resultado) #base de dados vetorial
 
-print("\n[RESULTADO FINAL]")
-for chave, valor in resultado.items():
-    if chave == "embeddings" and isinstance(valor, list): 
-        print(f"{chave}: Embeddings de tamanho {len(valor)}")
-    elif chave == "contexto_memoria" and isinstance(valor, list):
-        print(f"{chave}:")
-        for i, item in enumerate(valor, 1):
-            print(f"  {i}. {item}")
-    else:
-        print(f"{chave}: {valor}")
+
+
+
+
+
+if __name__ == "__main__":
+    input_text = input("Digite o texto a ser analisado: ")
+    enviar_para_fila(input_text)

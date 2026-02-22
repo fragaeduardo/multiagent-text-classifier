@@ -11,7 +11,7 @@ Você é o Agente Classificador Multi-Label.
 Sua tarefa é receber uma lista de aspectos analisados e atribuir a categoria correta para CADA UM deles.
 
 Categorias Permitidas:
-- SUPORTE_TECNICO: Problemas técnicos ATIVOS, bugs ou dificuldades de acesso AGORA, apenas coisas ainda não resolvidas/respondidas.
+- SUPORTE: Problemas técnicos ATIVOS, bugs ou dificuldades de acesso AGORA, dúvidas gerais ainda não resolvidas e instruções de procedimentos.
 - VENDAS: Preços, custos, planos, renovações ou interesse de compra.
 - RECLAMACAO: Insatisfação, críticas, demora no atendimento ou serviços ruins.
 - ELOGIO: Feedbacks positivos e satisfação.

@@ -4,7 +4,9 @@ from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-def get_llm(model_name="gpt-4o-mini", temperature=0.0):
+MODEL_LLM="gpt-4o-mini"
+
+def get_llm(model_name=MODEL_LLM, temperature=0.0):
     return ChatOpenAI(
         model=model_name,
         temperature=temperature,

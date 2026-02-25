@@ -13,7 +13,7 @@ COLLECTION_NAME = "mensagens_processadas"
 def get_client():
     global _client
     if _client is None:
-        print("[Qdrant] Inicializando cliente pela 1° vez")
+        print("[Qdrant] Inicializando cliente")
         _client = QdrantClient(path="./storage/qdrant")
         if not _client.collection_exists(collection_name=COLLECTION_NAME):
             print(f"[Qdrant] Criando nova coleção: {COLLECTION_NAME}")

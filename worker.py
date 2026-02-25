@@ -1,4 +1,4 @@
-from main import app, state
+from orchestrator.graph import app, state
 from memory.queue_manager import buscar_na_fila
 from memory.cache import salvar_resultado
 from memory.vector_store import salvar_respostas_vdb

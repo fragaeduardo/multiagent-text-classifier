@@ -6,7 +6,7 @@ Sistema robusto de classificação de texto multi-agente baseado em **LangChain*
 > [!IMPORTANT]
 > **Status do Projeto**: O sistema ainda está incompleto e em desenvolvimento ativo. Confira o Roadmap abaixo para ver o que falta.
 
-## 🛣️ Roadmap / Próximos Passos
+## Roadmap / Próximos Passos
 
 As seguintes funcionalidades estão planejadas para as próximas etapas:
 
@@ -15,14 +15,14 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
 
 ---
 
-## 🚀 Agentes Implementados
+## Agentes Implementados
 
 1.  **Ingestor**: Limpeza e normalização de texto e extração dos metadados.
 2.  **Analisador (ABSA)**: Decompõe o texto em aspectos, identificando tom de voz, intenção e urgência para cada trecho.
 3.  **Classificador (Multi-Label)**: Atribui múltiplas categorias (Elogio, Reclamação, Suporte, Vendas) baseando-se na análise granular.
 4.  **Explicador**: Gera uma narrativa humana e coesa, tratando contrastes e ironias.
 
-## 🧪 Casos de Teste de Sucesso
+## Casos de Teste de Sucesso
 
 ### 1. Sarcasmo e Ironia
 **Input**: *"Que maravilha de atualização! O sistema ficou tão 'otimizado' que agora ninguém mais consegue logar."*
@@ -39,7 +39,7 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
 **Input**: *"O boleto veio errado mês passado, mas hoje o suporte me ajudou."*
 **Resultado**: O sistema diferenciou uma reclamação de evento passado de um pedido de ajuda resolvido, mapeando as intenções corretamente.
 
-## 🛠️ Infraestrutura e Otimização
+## Infraestrutura e Otimização
 
 1. **Memória de Curto Prazo (Cache com Redis)**
    - **Lógica**: Utiliza o hash (SHA256) do texto padronizado como chave.
@@ -59,7 +59,7 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
    - **FastAPI**: Camada de serviço assíncrona com suporte a Polling (HTTP 202).
    - **Docker (Planejado)**: Padronização do ambiente e orquestração de serviços (App, Redis, Qdrant).
 
-## 🧰 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 - **Python 3.12**
 - **LangChain / LangGraph** (Orquestração de Agentes)
 - **OpenAI (GPT-4o-mini)** (Inteligência Central)
@@ -68,7 +68,7 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
 - **FastAPI** (Interface Web e Documentação Swagger)
 - **Docker** (Em breve - Containerização)
 
-## ⚙️ Como Rodar
+## Como Rodar
 
 O sistema utiliza uma arquitetura de fila (Producer-Consumer). Siga os passos abaixo:
 

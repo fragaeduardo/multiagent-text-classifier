@@ -4,5 +4,7 @@ langgraph
 redis
 qdrant-client
 python-dotenv
+fastapi
+uvicorn
 
 #OBS: BAIXAR REDIS-SERVER -Y NA MÁQUINA COM DOCKER

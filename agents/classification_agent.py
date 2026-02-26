@@ -48,7 +48,7 @@ def classification (state: dict) -> dict:
     if resultado_json.get("confianca_media") < 0.4:
         state["classe"] = "Inconclusivo"
     else: 
-        state["classe"] = resultado_json.get("categorias_identificadas")
+        state["classe"] = list(set( resultado_json.get("categorias_identificadas") )) #remove categorias duplicatas
 
 
     return state

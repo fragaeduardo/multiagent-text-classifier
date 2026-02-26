@@ -10,9 +10,8 @@ Sistema robusto de classificação de texto multi-agente baseado em **LangChain*
 
 As seguintes funcionalidades estão planejadas para as próximas etapas:
 
-- **API com FastAPI**: Implementação de endpoints REST para permitir a integração com sistemas externos e interfaces web.
 - **Containerização com Docker**: Criação de Dockerfiles e docker-compose para facilitar o deploy e a orquestração de todos os serviços de infraestrutura.
-- **Persistência em Nuvem**: Transição do banco de dados vetorial de uma instância local para o **Qdrant Cloud** ou servidor remoto, garantindo que a memória do sistema seja acessível de qualquer lugar e altamente escalável.
+- **Persistência em Nuvem**: Transição do banco de dados vetorial de uma instância local para o **Qdrant Cloud** ou servidor remoto.
 
 ---
 
@@ -56,9 +55,9 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
 4. **Modularização**
    - **Lógica**: Centralização da configuração da OpenAI em `models/llm.py` para facilitar a escalabilidade e troca de modelos.
 
-5. **API e Orquestração (Planejado)**
-   - **FastAPI**: Camada de serviço para exposição de endpoints.
-   - **Docker**: Padronização do ambiente e orquestração de serviços (App, Redis, Qdrant).
+5. **API e Orquestração**
+   - **FastAPI**: Camada de serviço assíncrona com suporte a Polling (HTTP 202).
+   - **Docker (Planejado)**: Padronização do ambiente e orquestração de serviços (App, Redis, Qdrant).
 
 ## 🧰 Tecnologias Utilizadas
 - **Python 3.12**
@@ -66,7 +65,7 @@ As seguintes funcionalidades estão planejadas para as próximas etapas:
 - **OpenAI (GPT-4o-mini)** (Inteligência Central)
 - **Redis** (Cache, Queue e Persistência)
 - **Qdrant** (Vector Database)
-- **FastAPI** (Em breve - Camada de API)
+- **FastAPI** (Interface Web e Documentação Swagger)
 - **Docker** (Em breve - Containerização)
 
 ## ⚙️ Como Rodar
@@ -80,16 +79,21 @@ O sistema utiliza uma arquitetura de fila (Producer-Consumer). Siga os passos ab
    - Configure sua `OPENAI_API_KEY` no arquivo `.env`
    - Certifique-se de ter instâncias de **Redis** e **Qdrant** rodando localmente.
 
-2. **Inicie o Worker** (Consumidor):
-   Abra um terminal e execute:
+2. **Inicie o Worker**:
+   Em um terminal, execute:
    ```bash
    python worker.py
    ```
-   Este processo ficará aguardando mensagens na fila para processar.
 
-3. **Envie um Texto** (Produtor):
+3. **Inicie a API**:
    Em outro terminal, execute:
+   ```bash
+   uvicorn api:app --reload
+   ```
+   Acesse a documentação automática (Swagger) para testar os endpoints (`/classify`: inicia a análise; `/status`: consulta o resultado).
+
+4. **Envie via CLI** (Opcional):
+   Se preferir o terminal, utilize:
    ```bash
    python main.py
    ```
-   Digite o texto quando solicitado. O `main.py` enviará o texto para a fila e o `worker.py` realizará a análise.

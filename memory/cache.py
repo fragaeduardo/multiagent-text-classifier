@@ -2,7 +2,9 @@ from redis import Redis
 import hashlib
 import json
 
-redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
+import os
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+redis_client= Redis(host=REDIS_HOST, port=6379, decode_responses=True)
 
 def gerar_chave(texto):
     return hashlib.sha256( texto.encode() ).hexdigest() #hash pra transformar o texto em assinatura unica de 64 caracteres

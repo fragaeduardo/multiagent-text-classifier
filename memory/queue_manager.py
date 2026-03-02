@@ -1,7 +1,9 @@
 import redis 
 import json
 
-r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+import os
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+r = redis.Redis(host=REDIS_HOST, port=6379, decode_responses=True)
 QUEUE_NAME = "fila_pendentes"
 
 TASK_RESULT_PREFIX = "task_result:"

@@ -6,15 +6,23 @@ from datetime import datetime
 from models.llm import MODEL_LLM
 from models.embeddings import MODEL_EMBEDDINGS
 
-_client = None
-#client = QdrantClient(path="./storage/qdrant")
+import os
 
+_client = None
+QDRANT_URL = os.getenv("QDRANT_URL")
 COLLECTION_NAME = "mensagens_processadas"
 def get_client():
     global _client
     if _client is None:
-        print("[Qdrant] Inicializando cliente")
-        _client = QdrantClient(path="./storage/qdrant")
+        if QDRANT_URL:
+            print(f"[Qdrant] Conectando via URL: {QDRANT_URL}")
+            _client = QdrantClient(url=QDRANT_URL)
+        else:
+            print(f"[Qdrant] Usando armazenamento local")
+            _client = QdrantClient(path="./storage/qdrant")
+
+
+
         if not _client.collection_exists(collection_name=COLLECTION_NAME):
             print(f"[Qdrant] Criando nova coleção: {COLLECTION_NAME}")
             _client.create_collection(collection_name=COLLECTION_NAME, 
